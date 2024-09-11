@@ -23,8 +23,13 @@ class Comment extends Model
         return $this->belongsTo(Task::class);
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public static function getCommentsByTask(int $id): Collection
     {
-        return self::query()->where('task_id', $id)->get();
+        return self::query()->where('task_id', $id)->with(['user', 'task'])->get();
     }
 }
