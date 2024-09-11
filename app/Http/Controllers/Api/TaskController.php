@@ -7,6 +7,7 @@ use App\Http\Requests\Task\TaskListRequest;
 use App\Http\Requests\Task\TaskStoreRequest;
 use App\Http\Requests\Task\TaskUpdateRequest;
 use App\Models\Task;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -14,7 +15,7 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(TaskListRequest $request)
+    public function index(TaskListRequest $request): JsonResponse
     {
         $tasks = Task::query()->get();
         return response()->json($tasks);
@@ -23,7 +24,7 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TaskStoreRequest $request)
+    public function store(TaskStoreRequest $request): JsonResponse
     {
         $task = Task::query()->create($request->all());
         return response()->json($task, 201);
@@ -32,7 +33,7 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $task = Task::query()->findOrFail($id);
         return response()->json($task);
@@ -41,7 +42,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TaskUpdateRequest $request, string $id)
+    public function update(TaskUpdateRequest $request, string $id): JsonResponse
     {
         $task = Task::query()->findOrFail($id);
         $task->update($request->all());
@@ -51,7 +52,7 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         $task = Task::query()->findOrFail($id)->delete();
         return response()->json($task);
